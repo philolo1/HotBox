@@ -5,7 +5,7 @@
 
 HotBox is a React Native wrapper around [TokBox OpenTOK SDK](https://tokbox.com/).
 
-I tried the other React Native OpenTOK wrappers but they did not seem to work / provide the flexibility we wanted so we created our own. 
+I tried the other React Native OpenTOK wrappers but they did not seem to work / provide the flexibility we wanted so we created our own.
 
 
 ## Installation
@@ -46,18 +46,18 @@ Please open a PR :)
 
 ## Usage
 
-Something like: 
+Something like:
 
 ```
 import {Session, PublisherView, SubscriberView} from 'react-native-hot-box'
-	
+
 var session = new Session()
 
 session.on('sessionDidConnect', () => console.log('connected'))
 session.on("sessionDidDisconnect", () => console.log('disconnected'))
 session.on('publisherStreamCreated', () => console.log("PUBLISHER CREATED"))
 session.on('sessionStreamCreated', () => console.log('sessionStreamCreated'))
-session.on('subscriberDidConnect', (streamId) => console.log("New subscriber", streamId))
+session.on('subscriberDidConnect', ({streamId, connectionData}) => console.log("New subscriber", streamId))
 session.on("subscriberDidDisconnect", (streamId) => console.log("Subscriber disconnected", streamId))
 session.on('sessionStreamDestroyed', (streamId) => console.log("Stream destroyed", streamId))
 
@@ -82,7 +82,7 @@ session.createSession(apiKey, sessionId, token)
 * publisherStreamCreated 			(streamId)
 * publisherStreamDidFailWithError 		(err)
 * publisherStreamDestroyed 			(streamId)
-* subscriberDidConnect 				(streamId)
+* subscriberDidConnect 				({streamId, connectionData})
 * subscriberDidFailWithError 			(streamId)
 * subscriberDidDisconnect 			(streamId)
 ```
@@ -93,26 +93,26 @@ session.createSession(apiKey, sessionId, token)
 session.createSession(apiKey, sessionId, token)
 session.createPublisher() // You can manually create the publisher but by default it's created automatically
 session.disconnectAllSessions()
-	
+
 // Turn on/off video stream for given streamId (null for publisher)
 session.requestVideoStream(streamId, on)
-	
+
 // Turn on/off audio stream for given streamId (null for publisher)
 session.requestAudioStream(streamId, on)
-	
+
 // Flip publisher camera
 session.requestCameraSwap(toBack) // toBack==true ==> back camera
-	
+
 //Send messages
 session.sendMessage(type, message, connectionId)
 session.broadcastMessage(type, message)
-	
+
 //Subscribe to Stream
 session.subscribe(streamId)
-	
+
 //Subscribe to signals
 session.on(event, handler)
-	
+
 ```
 
 ### Views
